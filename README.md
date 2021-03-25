@@ -1,4 +1,4 @@
-Chainable is a Ruby gem to track consecutive day chains on your Rails/ActiveRecord models. Hard fork of [has_streak](https://github.com/garrettqmartin8/has_streak) by Garrett Martin with a different include interface and more features. Requires Ruby >= 2.1 and ActiveRecord >= 3.2.22.
+Chainable is a Ruby gem to track consecutive day chains on your Rails/ActiveRecord models. Hard fork of [streakable](https://github.com/szTheory/streakable) by szTheory. Renamed it because was having namespace issues with my project Streaky
 
 ## Installation
 
