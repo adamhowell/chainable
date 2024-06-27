@@ -25,7 +25,7 @@ class Chain
   # @param [Symbol] association a key representing the ActiveRecord association on the instance
   # @param [Symbol] column a key representing the column on the association that you want to calculate the chain against
   # @param [Boolean] except_today whether to include today in the chain length calculation or not. If this is true, then you are assuming there is still time today for the chain to be extended
-  def initialize(instance, association, column, except_today: false)
+  def initialize(instance, association, column, except_today: false, extra_filters: {})
     @instance = instance
     @association = association
     @column = column
