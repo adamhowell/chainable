@@ -29,6 +29,7 @@ class Chain
     @instance = instance
     @association = association
     @column = column
+    @extra_filters = extra_filters
     # Don't penalize the current day being absent when determining chains
     @except_today = except_today
   end
@@ -116,11 +117,16 @@ class Chain
   private
     def days
       @days ||= begin
-        instance.send(association).map do |x|
-          x.send(column).in_time_zone.to_date
-        end.sort do |x, y|
-          x <=> y
-        end.reverse.uniq
+        scope = instance.send(association)
+        @extra_filters.each do |key, value|
+          scope = scope.where(key => value)
+        end
+
+        dates = scope.map { |x| x.send(column).in_time_zone.to_date }
+                    .sort.reverse.uniq
+
+        dates.pop if except_today && dates.last == Date.today
+        dates
       end
     end
 end

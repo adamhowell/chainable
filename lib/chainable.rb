@@ -49,8 +49,8 @@ module Chainable
     # @param [Symbol] column the column on the association that you want to calculate the chain against.
     # @param [Boolean] except_today whether to include today in the chain length calculation or not. If this is true, then you are assuming there is still time today for the chain to be extended
     # @param [Boolean] longest if true, calculate the longest day chain in the sequence, not just the current one
-    def chain(association, column=:created_at, except_today: false, longest: false)
-      build_chain(association, column, except_today: except_today).length(longest: longest)
+    def chain(association, column=:created_at, except_today: false, longest: false, extra_filters: {})
+      build_chain(association, column, except_today: except_today, extra_filters: extra_filters).length(longest: longest)
     end
 
     # Calculate all calendar chains. Returns a list of Date arrays. That is to say, a listing of consecutive
@@ -60,13 +60,13 @@ module Chainable
     # @param [Symbol] column the column on the association that you want to calculate the chain against.
     # @param [Boolean] except_today whether to include today in the chain length calculation or not. If this is true, then you are assuming there is still time today for the chain to be extended
     # @param [Boolean] longest if true, calculate the longest day chain in the sequence, not just the current one
-    def chains(association, column=:created_at)
-      build_chain(association, column, except_today: true).chains
+    def chains(association, column=:created_at, extra_filters: {})
+      build_chain(association, column, except_today: true, extra_filters: extra_filters).chains
     end
 
     private
-      def build_chain(association, column, except_today:)
-        Chain.new(self, association, column, except_today: except_today)
+      def build_chain(association, column, except_today:, extra_filters: {})
+        Chain.new(self, association, column, except_today: except_today, extra_filters: extra_filters)
       end
   end
 end
